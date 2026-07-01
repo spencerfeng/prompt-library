@@ -10,3 +10,13 @@ Prompt Library is a full-stack prompt management service which is built with Nex
 - **ORM**: Drizzle ORM
 - **Database**: SQLite
 - **AI**: Vercel AI SDK
+
+## Setup
+
+### 1. Start the development server
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
