@@ -2,7 +2,13 @@
 
 import { useState } from "react"
 import { TagInput } from "@/components/TagInput"
-import { FormFields } from "@/components/types"
+
+type FormFields = {
+  title: string
+  description: string
+  template: string
+  tags: string[]
+}
 
 type Props = {
   fields: FormFields

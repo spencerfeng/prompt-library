@@ -3,21 +3,20 @@
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { AiPromptForm } from "@/components/AiPromptForm"
-import { ManualPromptForm } from "@/components/ManualPromptForm"
-import { FormFields } from "@/components/types"
+import { PromptFieldsForm, PromptFields } from "@/components/PromptFieldsForm"
 
 type Tab = "manual" | "ai"
 
-const emptyFields: FormFields = { title: "", description: "", template: "", tags: [] }
+const emptyFields: PromptFields = { title: "", description: "", template: "", tags: [] }
 
 const NewPromptPage = () => {
   const router = useRouter()
   const [tab, setTab] = useState<Tab>("manual")
-  const [fields, setFields] = useState<FormFields>(emptyFields)
+  const [fields, setFields] = useState<PromptFields>(emptyFields)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState("")
 
-  async function handleSubmit(e: React.SyntheticEvent) {
+  const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault()
     setSaving(true)
     setError("")
@@ -74,9 +73,9 @@ const NewPromptPage = () => {
           </div>
 
           {tab === "manual" && (
-            <ManualPromptForm
+            <PromptFieldsForm
               fields={fields}
-              setFields={setFields}
+              onChange={setFields}
               onSubmit={handleSubmit}
               saving={saving}
               error={error}

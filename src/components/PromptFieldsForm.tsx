@@ -1,20 +1,35 @@
 "use client"
 
 import { TagInput } from "@/components/TagInput"
-import { FormFields } from "@/components/types"
 
-type Props = {
-  fields: FormFields
-  setFields: React.Dispatch<React.SetStateAction<FormFields>>
-  onSubmit: (e: React.SyntheticEvent) => void
-  saving: boolean
-  error: string
-  onCancel: () => void
+export type PromptFields = {
+  title: string
+  description: string
+  template: string
+  tags: string[]
 }
 
-export const ManualPromptForm = ({ fields, setFields, onSubmit, saving, error, onCancel }: Props) => {
-  const set = (key: keyof FormFields) => (value: FormFields[typeof key]) =>
-    setFields((f) => ({ ...f, [key]: value }))
+type Props = {
+  fields: PromptFields
+  onChange: (fields: PromptFields) => void
+  onSubmit: (e: React.SyntheticEvent) => void
+  onCancel: () => void
+  saving: boolean
+  error: string
+  submitLabel?: string
+}
+
+export const PromptFieldsForm = ({
+  fields,
+  onChange,
+  onSubmit,
+  onCancel,
+  saving,
+  error,
+  submitLabel = "Save Prompt"
+}: Props) => {
+  const set = (key: keyof PromptFields) => (value: PromptFields[typeof key]) =>
+    onChange({ ...fields, [key]: value })
 
   return (
     <form onSubmit={onSubmit} className="space-y-6">
@@ -68,7 +83,7 @@ export const ManualPromptForm = ({ fields, setFields, onSubmit, saving, error, o
           disabled={saving}
           className="rounded-lg bg-purple-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-purple-700 disabled:opacity-50"
         >
-          {saving ? "Saving..." : "Save Prompt"}
+          {saving ? "Saving..." : submitLabel}
         </button>
         <button
           type="button"
