@@ -19,6 +19,8 @@ Prompt Library is a full-stack prompt management service which is built with Nex
 cp .env.example .env.local
 ```
 
+Open `.env.local` and set your OpenAI API key
+
 ### 2. Run database migrations
 
 ```bashhjkl;,l78
