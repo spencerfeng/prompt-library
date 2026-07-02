@@ -13,7 +13,21 @@ Prompt Library is a full-stack prompt management service which is built with Nex
 
 ## Setup
 
-### 1. Start the development server
+### 1. Configure environment variables
+
+```bash
+cp .env.example .env.local
+```
+
+### 2. Run database migrations
+
+```bashhjkl;,l78
+npm run db:migrate
+```
+
+This creates a local database file with three tables: `prompts`, `internal_prompts` and `internal_prompt_versions`.
+
+### 3. Start the development server
 
 ```bash
 npm run dev
