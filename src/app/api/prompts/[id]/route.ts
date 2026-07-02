@@ -3,10 +3,10 @@ import { eq } from "drizzle-orm"
 import { prompts } from "@/db/schema"
 import { NextRequest, NextResponse } from "next/server"
 
-export async function GET(
+export const GET = async (
   _req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
-) {
+) => {
   const { id } = await params
   const prompt = await db.query.prompts.findFirst({ where: { id } })
 
@@ -17,10 +17,10 @@ export async function GET(
   return NextResponse.json({ ...prompt, tags: JSON.parse(prompt.tags) })
 }
 
-export async function PUT(
+export const PUT = async (
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
-) {
+) => {
   const { id } = await params
   const body = await req.json()
   const { title, description, template, tags } = body

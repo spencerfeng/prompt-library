@@ -10,7 +10,7 @@ const schema = z.object({
   tags: z.array(z.string())
 })
 
-export async function POST(req: NextRequest) {
+export const POST = async (req: NextRequest) => {
   const { description } = await req.json()
 
   if (!description) {

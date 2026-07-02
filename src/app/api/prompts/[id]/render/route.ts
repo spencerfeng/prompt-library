@@ -4,10 +4,10 @@ import { renderTemplate } from "@/helper/template"
 import { eq, sql } from "drizzle-orm"
 import { NextRequest, NextResponse } from "next/server"
 
-export async function POST(
+export const POST = async (
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
-) {
+) => {
   const { id } = await params
   const { variables } = await req.json()
 

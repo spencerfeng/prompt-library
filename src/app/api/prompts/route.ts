@@ -4,7 +4,7 @@ import { randomUUID } from "crypto"
 import { like, or } from "drizzle-orm"
 import { NextRequest, NextResponse } from "next/server"
 
-export async function GET(req: NextRequest) {
+export const GET = async (req: NextRequest) => {
   const { searchParams } = new URL(req.url)
   const q = searchParams.get("q")
 
@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
   return NextResponse.json(rows.map((p) => ({ ...p, tags: JSON.parse(p.tags) })))
 }
 
-export async function POST(req: NextRequest) {
+export const POST = async (req: NextRequest) => {
   const body = await req.json()
   const { title, description, template, tags } = body
 
