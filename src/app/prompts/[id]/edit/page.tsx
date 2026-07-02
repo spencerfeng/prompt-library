@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation"
 import { EditPromptForm } from "@/components/EditPromptForm"
+import { PageHeader } from "@/components/PageHeader"
 
 const fetchPrompt = async (id: string) => {
   const res = await fetch(
@@ -22,9 +23,7 @@ const EditPromptPage = async ({
 
   return (
     <>
-      <header className="flex items-center justify-between px-8 h-16 bg-white border-b border-gray-200">
-        <h1 className="text-2xl font-bold text-gray-900">Edit Prompt</h1>
-      </header>
+      <PageHeader title="Edit Prompt" />
       <EditPromptForm prompt={prompt} />
     </>
   )

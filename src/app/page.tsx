@@ -1,3 +1,4 @@
+import { PageHeader } from "@/components/PageHeader"
 import { PromptCard } from "@/components/PromptCard"
 import { SearchBar } from "@/components/SearchBar"
 import { Suspense } from "react"
@@ -12,21 +13,20 @@ const fetchPrompts = async (q?: string) => {
 const HomePage = async ({
   searchParams
 }: {
-  searchParams: Promise<{ q?: string }>;
+  searchParams: Promise<{ q?: string }>
 }) => {
   const { q } = await searchParams
   const prompts = await fetchPrompts(q)
 
   return (
     <>
-      <header className="flex items-center justify-between px-8 h-16 bg-white border-b border-gray-200">
-        <h1 className="text-2xl font-bold text-gray-900">Prompt Library</h1>
+      <PageHeader title="Prompt Library">
         <div className="w-64">
           <Suspense>
             <SearchBar />
           </Suspense>
         </div>
-      </header>
+      </PageHeader>
 
       <main className="flex-1 px-8 py-6">
         {prompts.length === 0 ? (
