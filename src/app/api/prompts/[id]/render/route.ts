@@ -1,11 +1,8 @@
 import { db } from "@/db"
 import { prompts } from "@/db/schema"
+import { renderTemplate } from "@/helper/template"
 import { eq, sql } from "drizzle-orm"
 import { NextRequest, NextResponse } from "next/server"
-
-const renderTemplate = (template: string, vars: Record<string, string>) => {
-  return template.replace(/\{\{(\w+)\}\}/g, (_, key) => vars[key] ?? `{{${key}}}`)
-}
 
 export async function POST(
   req: NextRequest,
