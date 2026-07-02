@@ -10,6 +10,12 @@ export default function Sidebar() {
         >
           Library
         </Link>
+        <Link
+          href="/prompts/new"
+          className="flex items-center px-3 py-2 rounded-lg bg-purple-50 text-purple-700 font-medium text-sm"
+        >
+          Create Prompt
+        </Link>
       </nav>
     </aside>
   )

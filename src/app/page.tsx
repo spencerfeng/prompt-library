@@ -9,7 +9,7 @@ const fetchPrompts = async (q?: string) => {
   return res.json()
 }
 
-export const HomePage = async ({
+const HomePage = async ({
   searchParams
 }: {
   searchParams: Promise<{ q?: string }>;
@@ -42,3 +42,5 @@ export const HomePage = async ({
     </>
   )
 }
+
+export default HomePage
