@@ -5,7 +5,8 @@ import { usePathname } from "next/navigation"
 
 const navItems = [
   { label: "Library", href: "/" },
-  { label: "Create Prompt", href: "/prompts/new" }
+  { label: "Create Prompt", href: "/prompts/new" },
+  { label: "Internal Library", href: "/internal" }
 ]
 
 const Sidebar = () => {
