@@ -5,11 +5,9 @@ import { useState } from "react"
 import { AiPromptForm } from "@/components/AiPromptForm"
 import { BackLink } from "@/components/BackLink"
 import { PageHeader } from "@/components/PageHeader"
-import { PromptFieldsForm, PromptFields } from "@/components/PromptFieldsForm"
+import { PromptFieldsForm, PromptFields, emptyFields } from "@/components/PromptFieldsForm"
 
 type Tab = "manual" | "ai"
-
-const emptyFields: PromptFields = { title: "", description: "", template: "", tags: [] }
 
 const NewPromptPage = () => {
   const router = useRouter()

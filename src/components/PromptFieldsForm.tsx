@@ -9,6 +9,8 @@ export type PromptFields = {
   tags: string[]
 }
 
+export const emptyFields: PromptFields = { title: "", description: "", template: "", tags: [] }
+
 type Props = {
   fields: PromptFields
   onChange: (fields: PromptFields) => void
