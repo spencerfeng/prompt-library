@@ -1,5 +1,7 @@
 import { diff3Merge } from "node-diff3"
 
+export type Side = "upstream" | "customer"
+
 export type FieldStatus =
   | "unchanged"
   | "upstream-only"
