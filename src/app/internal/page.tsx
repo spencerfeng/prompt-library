@@ -35,7 +35,7 @@ const InternalLibraryPage = async () => {
         {prompts.length === 0 ? (
           <p className="text-center text-gray-400 py-16">No internal prompts yet.</p>
         ) : (
-          <div className="flex flex-col gap-3">
+          <div className="grid grid-cols-2 gap-4">
             {prompts.map((prompt) => (
               <Link
                 key={prompt.id}
