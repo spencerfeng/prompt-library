@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { BackLink } from "@/components/BackLink"
+import { FormattedDate } from "@/components/FormattedDate"
 import { PageHeader } from "@/components/PageHeader"
 import { RenderForm } from "@/components/RenderForm"
 
@@ -91,7 +92,7 @@ const PromptDetailPage = async ({
           <div className="flex gap-6 text-xs text-gray-400">
             <span>{prompt.renderCount} render{prompt.renderCount !== 1 ? "s" : ""}</span>
             {prompt.lastUsedAt && (
-              <span>Last used {new Date(prompt.lastUsedAt).toLocaleDateString()}</span>
+              <span>Last used <FormattedDate timestamp={prompt.lastUsedAt} /></span>
             )}
           </div>
 

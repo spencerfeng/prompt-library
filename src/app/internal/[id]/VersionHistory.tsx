@@ -1,3 +1,4 @@
+import { FormattedDate } from "@/components/FormattedDate"
 import { Version } from "./types"
 
 type Props = {
@@ -39,7 +40,7 @@ export const VersionHistory = ({ versions, currentVersion }: Props) => {
                   </div>
                 </td>
                 <td className="px-4 py-3 text-gray-400">
-                  {new Date(v.publishedAt).toLocaleDateString()}
+                  <FormattedDate timestamp={v.publishedAt} />
                 </td>
               </tr>
             ))}

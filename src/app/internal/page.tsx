@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { PageHeader } from "@/components/PageHeader"
+import { FormattedDate } from "@/components/FormattedDate"
 import { PromptCard } from "@/components/PromptCard"
 
 type InternalPrompt = {
@@ -45,7 +46,7 @@ const InternalLibraryPage = async () => {
                 description={prompt.description}
                 tags={prompt.tags}
                 badge={`v${prompt.currentVersion}`}
-                meta={`Updated ${new Date(prompt.updatedAt).toLocaleDateString()}`}
+                meta={<>Updated <FormattedDate timestamp={prompt.updatedAt} /></>}
               />
             ))}
           </div>

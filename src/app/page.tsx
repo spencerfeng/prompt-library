@@ -1,3 +1,4 @@
+import { FormattedDate } from "@/components/FormattedDate"
 import { PageHeader } from "@/components/PageHeader"
 import { PromptCard } from "@/components/PromptCard"
 import { SearchBar } from "@/components/SearchBar"
@@ -41,7 +42,7 @@ const HomePage = async ({
                 description={prompt.description}
                 tags={prompt.tags}
                 meta={`${prompt.renderCount} render${prompt.renderCount !== 1 ? "s" : ""}`}
-                footer={prompt.lastUsedAt ? `Last used ${new Date(prompt.lastUsedAt).toLocaleDateString()}` : undefined}
+                footer={prompt.lastUsedAt ? <><span>Last used </span><FormattedDate timestamp={prompt.lastUsedAt} /></> : undefined}
               />
             ))}
           </div>
