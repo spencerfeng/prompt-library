@@ -7,37 +7,51 @@ export const GET = async (
   _req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) => {
-  const { id } = await params
-  const prompt = await db.query.prompts.findFirst({ where: { id } })
+  try {
+    const { id } = await params
+    const prompt = await db.query.prompts.findFirst({ where: { id } })
 
-  if (!prompt) {
-    return NextResponse.json({ error: "Not found" }, { status: 404 })
+    if (!prompt) {
+      return NextResponse.json({ error: "Not found" }, { status: 404 })
+    }
+
+    return NextResponse.json({ ...prompt, tags: JSON.parse(prompt.tags) })
+  } catch {
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
-
-  return NextResponse.json({ ...prompt, tags: JSON.parse(prompt.tags) })
 }
 
 export const PUT = async (
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) => {
-  const { id } = await params
-  const body = await req.json()
-  const { title, description, template, tags } = body
-
-  if (!title || !description || !template || !tags) {
-    return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
+  let body: { title?: string; description?: string; template?: string; tags?: string[] }
+  try {
+    body = await req.json()
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 })
   }
 
-  const [updated] = await db
-    .update(prompts)
-    .set({ title, description, template, tags: JSON.stringify(tags), updatedAt: Date.now() })
-    .where(eq(prompts.id, id))
-    .returning()
+  try {
+    const { id } = await params
+    const { title, description, template, tags } = body
 
-  if (!updated) {
-    return NextResponse.json({ error: "Not found" }, { status: 404 })
+    if (!title || !description || !template || !tags) {
+      return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
+    }
+
+    const [updated] = await db
+      .update(prompts)
+      .set({ title, description, template, tags: JSON.stringify(tags), updatedAt: Date.now() })
+      .where(eq(prompts.id, id))
+      .returning()
+
+    if (!updated) {
+      return NextResponse.json({ error: "Not found" }, { status: 404 })
+    }
+
+    return NextResponse.json({ ...updated, tags: JSON.parse(updated.tags) })
+  } catch {
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
-
-  return NextResponse.json({ ...updated, tags: JSON.parse(updated.tags) })
 }

@@ -11,16 +11,24 @@ const schema = z.object({
 })
 
 export const POST = async (req: NextRequest) => {
-  const { description } = await req.json()
-
-  if (!description) {
-    return NextResponse.json({ error: "Missing description" }, { status: 400 })
+  let body: { description?: string }
+  try {
+    body = await req.json()
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 })
   }
 
-  const result = await generateText({
-    model: openai("gpt-4o-mini"),
-    output: Output.object({ schema }),
-    prompt: `Generate a prompt library entry for: ${description}
+  try {
+    const { description } = body
+
+    if (!description) {
+      return NextResponse.json({ error: "Missing description" }, { status: 400 })
+    }
+
+    const result = await generateText({
+      model: openai("gpt-4o-mini"),
+      output: Output.object({ schema }),
+      prompt: `Generate a prompt library entry for: ${description}
 
 Rules:
 - The template must use {{variable_name}} syntax (double curly braces) for every dynamic value that the user will fill in at runtime. Never use [placeholder] or <placeholder> style.
@@ -29,7 +37,10 @@ Rules:
 - The title should be concise (3-6 words).
 - The description should be one sentence explaining what the prompt does.
 - Tags should be lowercase single words relevant to the use case. Avoid using underscores or hyphens in a tag.`
-  })
+    })
 
-  return NextResponse.json(result.output)
+    return NextResponse.json(result.output)
+  } catch {
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
+  }
 }
