@@ -31,19 +31,28 @@ export const ReviewUpdateForm = ({ promptId, base, upstream, customer }: Props) 
 
   const fieldRows: FieldRow[] = useMemo(() => [
     {
-      key: "title", label: "Title",
+      key: "title",
+      label: "Title",
       status: diffField(base.title, upstream.title, customer.title),
-      base: base.title, upstream: upstream.title, customer: customer.title
+      base: base.title,
+      upstream: upstream.title,
+      customer: customer.title
     },
     {
-      key: "description", label: "Description",
+      key: "description",
+      label: "Description",
       status: diffField(base.description, upstream.description, customer.description),
-      base: base.description, upstream: upstream.description, customer: customer.description
+      base: base.description,
+      upstream: upstream.description,
+      customer: customer.description
     },
     {
-      key: "tags", label: "Tags",
+      key: "tags",
+      label: "Tags",
       status: diffField(JSON.stringify(base.tags), JSON.stringify(upstream.tags), JSON.stringify(customer.tags)),
-      base: base.tags.join(", "), upstream: upstream.tags.join(", "), customer: customer.tags.join(", ")
+      base: base.tags.join(", "),
+      upstream: upstream.tags.join(", "),
+      customer: customer.tags.join(", ")
     }
   ], [base, upstream, customer])
 
@@ -65,19 +74,15 @@ export const ReviewUpdateForm = ({ promptId, base, upstream, customer }: Props) 
     )
   })
 
-  function buildMergedFields() {
-    const resolveText = (key: string, upVal: string, custVal: string): string => {
-      const status = fieldRows.find((r) => r.key === key)!.status
+  const buildMergedFields = () => {
+    const resolve = <T,>(key: string, upVal: T, custVal: T): T => {
+      const status = fieldRows.find((r) => r.key === key)?.status ?? "unchanged"
       if (status === "upstream-only") return upVal
       if (status === "unchanged" || status === "customer-only") return custVal
       return (fieldChoices[key] ?? "upstream") === "upstream" ? upVal : custVal
     }
 
-    const tagsStatus = fieldRows.find((r) => r.key === "tags")!.status
-    const tags =
-      tagsStatus === "upstream-only"  ? upstream.tags :
-      tagsStatus === "unchanged" || tagsStatus === "customer-only" ? customer.tags :
-      (fieldChoices["tags"] ?? "upstream") === "upstream" ? upstream.tags : customer.tags
+    const tags = resolve("tags", upstream.tags, customer.tags)
 
     const template = templateMerge.ok
       ? templateMerge.result
@@ -90,8 +95,8 @@ export const ReviewUpdateForm = ({ promptId, base, upstream, customer }: Props) 
           .join("\n")
 
     return {
-      title:  resolveText("title", upstream.title, customer.title),
-      description: resolveText("description", upstream.description, customer.description),
+      title: resolve("title", upstream.title, customer.title),
+      description: resolve("description", upstream.description, customer.description),
       template,
       tags
     }
