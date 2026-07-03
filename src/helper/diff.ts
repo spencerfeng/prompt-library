@@ -49,6 +49,15 @@ export const mergeTemplate = (
   const customerLines = customer.split("\n")
 
   // diff3Merge(a, o, b): a=upstream, o=base, b=customer
+  // The output looks like:
+  // [
+  //   {ok: ["The is line 1"]},
+  //   {conflict: {
+  //      a: ["This is line 2 with upstream change"],
+  //      b: ["This is line 2 with customer change"],
+  //      o: ["This is line 2"]
+  //   }}
+  // ]
   const regions = diff3Merge(upstreamLines, baseLines, customerLines)
 
   const hunks: MergeHunk[] = []
