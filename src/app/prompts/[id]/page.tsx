@@ -13,13 +13,25 @@ const fetchPrompt = async (id: string) => {
   return res.json()
 }
 
+const fetchUpdateStatus = async (id: string) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/prompts/${id}/update-status`,
+    { cache: "no-store" }
+  )
+  return res.json()
+}
+
+
 const PromptDetailPage = async ({
   params
 }: {
   params: Promise<{ id: string }>
 }) => {
   const { id } = await params
-  const prompt = await fetchPrompt(id)
+  const [prompt, updateStatus] = await Promise.all([
+    fetchPrompt(id),
+    fetchUpdateStatus(id)
+  ])
 
   if (!prompt) notFound()
 
@@ -29,6 +41,20 @@ const PromptDetailPage = async ({
 
       <main className="flex-1 px-8 py-6">
         <BackLink href="/" label="Back to Library" />
+
+        {updateStatus.hasUpdate && (
+          <div className="flex items-center justify-between rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 mb-2">
+            <p className="text-sm text-amber-800">
+              Internal template updated (v{updateStatus.base.version} → v{updateStatus.upstream.version}). Review changes.
+            </p>
+            <Link
+              href={`/prompts/${id}/review-update`}
+              className="ml-4 shrink-0 rounded-lg bg-amber-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-amber-700"
+            >
+              Review Update
+            </Link>
+          </div>
+        )}
 
         <div className="space-y-6">
           <div className="flex items-start justify-between gap-4">
