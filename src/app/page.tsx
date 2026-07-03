@@ -33,8 +33,16 @@ const HomePage = async ({
           <p className="text-center text-gray-400 py-16">No prompts found.</p>
         ) : (
           <div className="grid grid-cols-2 gap-4">
-            {prompts.map((prompt: Parameters<typeof PromptCard>[0]["prompt"]) => (
-              <PromptCard key={prompt.id} prompt={prompt} />
+            {prompts.map((prompt: { id: string; title: string; description: string; tags: string[]; renderCount: number; lastUsedAt: number | null }) => (
+              <PromptCard
+                key={prompt.id}
+                href={`/prompts/${prompt.id}`}
+                title={prompt.title}
+                description={prompt.description}
+                tags={prompt.tags}
+                meta={`${prompt.renderCount} render${prompt.renderCount !== 1 ? "s" : ""}`}
+                footer={prompt.lastUsedAt ? `Last used ${new Date(prompt.lastUsedAt).toLocaleDateString()}` : undefined}
+              />
             ))}
           </div>
         )}
