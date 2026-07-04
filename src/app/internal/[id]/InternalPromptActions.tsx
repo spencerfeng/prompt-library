@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { PromptFields } from "@/components/PromptFieldsForm"
+import type { PromptFields } from "@/types/api"
 import { ForkAction } from "./ForkAction"
 import { PublishAction } from "./PublishAction"
 

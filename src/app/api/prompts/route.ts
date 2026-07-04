@@ -3,6 +3,7 @@ import { prompts } from "@/db/schema"
 import { randomUUID } from "crypto"
 import { like, or } from "drizzle-orm"
 import { NextRequest, NextResponse } from "next/server"
+import type { PromptFields } from "@/types/api"
 
 export const GET = async (req: NextRequest) => {
   try {
@@ -29,7 +30,7 @@ export const GET = async (req: NextRequest) => {
 }
 
 export const POST = async (req: NextRequest) => {
-  let body: { title?: string; description?: string; template?: string; tags?: string[] }
+  let body: Partial<PromptFields>
   try {
     body = await req.json()
   } catch {

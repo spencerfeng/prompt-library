@@ -2,17 +2,9 @@ import Link from "next/link"
 import { PageHeader } from "@/components/PageHeader"
 import { FormattedDate } from "@/components/FormattedDate"
 import { PromptCard } from "@/components/PromptCard"
+import type { InternalPromptListItem } from "@/types/api"
 
-type InternalPrompt = {
-  id: string
-  currentVersion: number
-  title: string
-  description: string
-  tags: string[]
-  updatedAt: number
-}
-
-const fetchInternalPrompts = async (): Promise<InternalPrompt[]> => {
+const fetchInternalPrompts = async (): Promise<InternalPromptListItem[]> => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/internal-prompts`, {
     cache: "no-store"
   })

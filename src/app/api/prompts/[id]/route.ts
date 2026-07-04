@@ -2,6 +2,7 @@ import { db } from "@/db"
 import { eq } from "drizzle-orm"
 import { prompts } from "@/db/schema"
 import { NextRequest, NextResponse } from "next/server"
+import type { PromptFields } from "@/types/api"
 
 export const GET = async (
   _req: NextRequest,
@@ -25,7 +26,7 @@ export const PUT = async (
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) => {
-  let body: { title?: string; description?: string; template?: string; tags?: string[] }
+  let body: Partial<PromptFields>
   try {
     body = await req.json()
   } catch {

@@ -3,15 +3,8 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { BackLink } from "@/components/BackLink"
-import { PromptFieldsForm, PromptFields } from "@/components/PromptFieldsForm"
-
-type Prompt = {
-  id: string
-  title: string
-  description: string
-  template: string
-  tags: string[]
-}
+import { PromptFieldsForm } from "@/components/PromptFieldsForm"
+import type { Prompt, PromptFields } from "@/types/api"
 
 export const EditPromptForm = ({ prompt }: { prompt: Prompt }) => {
   const router = useRouter()

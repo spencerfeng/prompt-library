@@ -4,26 +4,20 @@ import { DiffTable } from "@/components/DiffTable"
 import type { FieldRow } from "@/components/DiffTable"
 import { TemplateMergeView } from "@/components/TemplateMergeView"
 import { FinalResultPanel } from "@/components/FinalResultPanel"
-import type { EditableFields } from "@/components/FinalResultPanel"
 import { diffField, mergeTemplate } from "@/helper/diff"
 import type { MergeResult, Side } from "@/helper/diff"
+import type { PromptFields } from "@/types/api"
 import { useRouter } from "next/navigation"
 import { useEffect, useMemo, useState } from "react"
 
 
-type Snapshot = {
-  version: number
-  title: string
-  description: string
-  template: string
-  tags: string[]
-};
+type Snapshot = PromptFields & { version: number }
 
 type Props = {
   promptId: string
   base: Snapshot
   upstream: Snapshot
-  customer: { title: string; description: string; template: string; tags: string[] }
+  customer: PromptFields
 }
 
 export const ReviewUpdateForm = ({ promptId, base, upstream, customer }: Props) => {
@@ -76,7 +70,7 @@ export const ReviewUpdateForm = ({ promptId, base, upstream, customer }: Props) 
     )
   })
 
-  const mergedFields: EditableFields = useMemo(() => {
+  const mergedFields: PromptFields = useMemo(() => {
     const resolve = <T,>(key: string, upVal: T, custVal: T): T => {
       const status = fieldRows.find((r) => r.key === key)?.status ?? "unchanged"
       if (status === "upstream-only") return upVal
@@ -102,7 +96,7 @@ export const ReviewUpdateForm = ({ promptId, base, upstream, customer }: Props) 
     }
   }, [fieldChoices, hunkChoices, fieldRows, templateMerge, upstream, customer])
 
-  const [editableFields, setEditableFields] = useState<EditableFields>(mergedFields)
+  const [editableFields, setEditableFields] = useState<PromptFields>(mergedFields)
 
   useEffect(() => {
     setEditableFields(mergedFields)

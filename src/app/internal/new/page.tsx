@@ -2,7 +2,8 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { PromptFieldsForm, PromptFields, emptyFields } from "@/components/PromptFieldsForm"
+import { PromptFieldsForm, emptyFields } from "@/components/PromptFieldsForm"
+import type { PromptFields } from "@/types/api"
 import { PageHeader } from "@/components/PageHeader"
 import { BackLink } from "@/components/BackLink"
 

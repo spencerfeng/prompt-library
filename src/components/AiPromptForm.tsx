@@ -2,17 +2,11 @@
 
 import { useState } from "react"
 import { TagInput } from "@/components/TagInput"
-
-type FormFields = {
-  title: string
-  description: string
-  template: string
-  tags: string[]
-}
+import type { PromptFields } from "@/types/api"
 
 type Props = {
-  fields: FormFields
-  setFields: React.Dispatch<React.SetStateAction<FormFields>>
+  fields: PromptFields
+  setFields: React.Dispatch<React.SetStateAction<PromptFields>>
   onSubmit: (e: React.SyntheticEvent) => void
   saving: boolean
   saveError: string
@@ -25,7 +19,7 @@ export const AiPromptForm = ({ fields, setFields, onSubmit, saving, saveError, o
   const [aiGenerated, setAiGenerated] = useState(false)
   const [generateError, setGenerateError] = useState("")
 
-  const set = (key: keyof FormFields) => (value: FormFields[typeof key]) =>
+  const set = (key: keyof PromptFields) => (value: PromptFields[typeof key]) =>
     setFields((f) => ({ ...f, [key]: value }))
 
   async function handleGenerate() {

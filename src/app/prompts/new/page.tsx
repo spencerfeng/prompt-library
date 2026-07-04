@@ -5,7 +5,8 @@ import { useState } from "react"
 import { AiPromptForm } from "@/components/AiPromptForm"
 import { BackLink } from "@/components/BackLink"
 import { PageHeader } from "@/components/PageHeader"
-import { PromptFieldsForm, PromptFields, emptyFields } from "@/components/PromptFieldsForm"
+import { PromptFieldsForm, emptyFields } from "@/components/PromptFieldsForm"
+import type { PromptFields } from "@/types/api"
 
 type Tab = "manual" | "ai"
 

@@ -3,6 +3,7 @@ import { internalPrompts, internalPromptVersions } from "@/db/schema"
 import { eq } from "drizzle-orm"
 import { randomUUID } from "crypto"
 import { NextRequest, NextResponse } from "next/server"
+import type { PromptFields } from "@/types/api"
 
 export const GET = async () => {
   try {
@@ -32,7 +33,7 @@ export const GET = async () => {
 }
 
 export const POST = async (req: NextRequest) => {
-  let body: { title?: string; description?: string; template?: string; tags?: string[] }
+  let body: Partial<PromptFields>
   try {
     body = await req.json()
   } catch {

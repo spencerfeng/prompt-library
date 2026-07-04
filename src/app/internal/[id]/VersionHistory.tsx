@@ -1,8 +1,8 @@
 import { FormattedDate } from "@/components/FormattedDate"
-import { Version } from "./types"
+import type { InternalPromptVersion } from "@/types/api"
 
 type Props = {
-  versions: Version[]
+  versions: InternalPromptVersion[]
   currentVersion: number
 }
 

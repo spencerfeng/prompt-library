@@ -2,22 +2,16 @@
 
 import { useEffect, useRef } from "react"
 import { TagInput } from "@/components/TagInput"
-
-export type EditableFields = {
-  title: string
-  description: string
-  tags: string[]
-  template: string
-}
+import type { PromptFields } from "@/types/api"
 
 type Props = {
   beforeTemplate: string
-  fields: EditableFields
-  onChange: (fields: EditableFields) => void
+  fields: PromptFields
+  onChange: (fields: PromptFields) => void
 }
 
 export const FinalResultPanel = ({ beforeTemplate, fields, onChange }: Props) => {
-  const update = (patch: Partial<EditableFields>) => onChange({ ...fields, ...patch })
+  const update = (patch: Partial<PromptFields>) => onChange({ ...fields, ...patch })
 
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 

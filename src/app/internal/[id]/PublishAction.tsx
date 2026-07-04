@@ -2,7 +2,8 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { PromptFieldsForm, PromptFields } from "@/components/PromptFieldsForm"
+import { PromptFieldsForm } from "@/components/PromptFieldsForm"
+import type { PromptFields } from "@/types/api"
 
 type Props = {
   internalId: string

@@ -1,13 +1,7 @@
 "use client"
 
 import { TagInput } from "@/components/TagInput"
-
-export type PromptFields = {
-  title: string
-  description: string
-  template: string
-  tags: string[]
-}
+import type { PromptFields } from "@/types/api"
 
 export const emptyFields: PromptFields = { title: "", description: "", template: "", tags: [] }
 
