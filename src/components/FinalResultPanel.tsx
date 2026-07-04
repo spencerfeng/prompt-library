@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef } from "react"
+import { TagInput } from "@/components/TagInput"
 
 export type EditableFields = {
   title: string
@@ -52,12 +53,10 @@ export const FinalResultPanel = ({ beforeTemplate, fields, onChange }: Props) =>
         </div>
         <div>
           <label className="block text-xs font-semibold text-gray-900 mb-1">Tags (comma-separated)</label>
-          <input
-            type="text"
-            value={fields.tags.join(", ")}
-            onChange={(e) =>
-              update({ tags: e.target.value.split(",").map((t) => t.trim()).filter(Boolean) })
-            }
+          <TagInput
+            value={fields.tags}
+            onChange={(tags) => update({ tags })}
+            placeholder=""
             className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
           />
         </div>
