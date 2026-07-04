@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation"
 import { db } from "@/db"
-import { InternalPromptActions } from "./InternalPromptActions"
-import { VersionHistory } from "./VersionHistory"
+import { InternalPromptActions } from "@/components/InternalPromptActions"
+import { VersionHistory } from "@/components/VersionHistory"
 import { PageHeader } from "@/components/PageHeader"
 import { BackLink } from "@/components/BackLink"
 

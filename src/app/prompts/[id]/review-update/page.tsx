@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation"
-import { ReviewUpdateForm } from "./ReviewUpdateForm"
+import { ReviewUpdateForm } from "@/components/ReviewUpdateForm"
 import { PageHeader } from "@/components/PageHeader"
 import { BackLink } from "@/components/BackLink"
 
