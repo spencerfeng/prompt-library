@@ -15,9 +15,27 @@ Prompt Library is a full-stack prompt management service which is built with Nex
 
 ---
 
+## Design Document
+
+[DESIGN.md](DESIGN.md)
+
+---
+
 ## Setup
 
-### 1. Configure environment variables
+### 1. Setup up the node version
+
+```bash
+nvm use
+```
+
+### 2. Install dependencies
+
+```bash
+npm i
+```
+
+### 3. Configure environment variables
 
 ```bash
 cp .env.example .env.local
@@ -25,7 +43,7 @@ cp .env.example .env.local
 
 Open `.env.local` and set your OpenAI API key
 
-### 2. Run database migrations
+### 4. Run database migrations
 
 ```bash
 npm run db:migrate
@@ -33,7 +51,7 @@ npm run db:migrate
 
 This creates a local database file with three tables: `prompts`, `internal_prompts` and `internal_prompt_versions`.
 
-### 3. Start the development server
+### 5. Start the development server
 
 ```bash
 npm run dev
@@ -173,4 +191,5 @@ This scenario demonstrates the core Question 2 workflow — an internal team man
 2. Click **Review Update**. The diff is computed between the customer's base (v1) and the latest upstream (v3).
 3. Both sides changed the last line — the customer's edit and the upstream's change conflict on that line.
 4. The template section shows a **conflict block**. The customer picks either the upstream version or their own for that block.
+5. Check if you want to make further changes in the Edit Final Result section.
 5. Click **Apply Update**. The prompt is synced to v3 with the chosen resolution.
