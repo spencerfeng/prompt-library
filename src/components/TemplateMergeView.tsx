@@ -45,13 +45,13 @@ export const TemplateMergeView = ({ merge, hunkChoices, onHunkChoiceChange }: Pr
           const choice = hunkChoices[i] ?? "upstream"
           return (
             <div key={i} className="rounded-lg border-2 border-amber-200 overflow-hidden">
-              <div className="bg-amber-50 px-4 py-1.5 text-xs font-semibold text-amber-700 border-b border-amber-200 uppercase tracking-wide">
+              <div className="bg-amber-50 px-3 py-1 text-xs font-semibold text-amber-700 border-b border-amber-200 uppercase tracking-wide">
                 Conflict
               </div>
               {(["upstream", "customer"] as Side[]).map((side, si) => (
                 <label
                   key={side}
-                  className={`flex items-start gap-3 px-4 py-3 cursor-pointer transition-colors ${
+                  className={`flex items-start gap-2 px-3 py-2 cursor-pointer transition-colors ${
                     si > 0 ? "border-t border-gray-100" : ""
                   } ${choice === side ? "bg-purple-50" : "bg-white hover:bg-gray-50"}`}
                 >
@@ -63,10 +63,10 @@ export const TemplateMergeView = ({ merge, hunkChoices, onHunkChoiceChange }: Pr
                     className="mt-0.5 accent-purple-600 shrink-0"
                   />
                   <div className="min-w-0 flex-1">
-                    <div className="text-xs font-medium text-gray-500 mb-1">
+                    <span className="text-xs font-medium text-gray-500 mr-2">
                       {side === "upstream" ? "Upstream" : "Yours"}
-                    </div>
-                    <pre className="text-sm font-mono text-gray-800 whitespace-pre-wrap">
+                    </span>
+                    <pre className="text-sm font-mono text-gray-800 whitespace-pre-wrap inline">
                       {(side === "upstream" ? hunk.upstream : hunk.customer).join("\n")}
                     </pre>
                   </div>

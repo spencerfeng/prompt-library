@@ -3,10 +3,12 @@
 import { DiffTable } from "@/components/DiffTable"
 import type { FieldRow } from "@/components/DiffTable"
 import { TemplateMergeView } from "@/components/TemplateMergeView"
+import { FinalResultPanel } from "@/components/FinalResultPanel"
+import type { EditableFields } from "@/components/FinalResultPanel"
 import { diffField, mergeTemplate } from "@/helper/diff"
 import type { MergeResult, Side } from "@/helper/diff"
 import { useRouter } from "next/navigation"
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 
 
 type Snapshot = {
@@ -74,15 +76,13 @@ export const ReviewUpdateForm = ({ promptId, base, upstream, customer }: Props) 
     )
   })
 
-  const buildMergedFields = () => {
+  const mergedFields: EditableFields = useMemo(() => {
     const resolve = <T,>(key: string, upVal: T, custVal: T): T => {
       const status = fieldRows.find((r) => r.key === key)?.status ?? "unchanged"
       if (status === "upstream-only") return upVal
       if (status === "unchanged" || status === "customer-only") return custVal
       return (fieldChoices[key] ?? "upstream") === "upstream" ? upVal : custVal
     }
-
-    const tags = resolve("tags", upstream.tags, customer.tags)
 
     const template = templateMerge.ok
       ? templateMerge.result
@@ -97,10 +97,16 @@ export const ReviewUpdateForm = ({ promptId, base, upstream, customer }: Props) 
     return {
       title: resolve("title", upstream.title, customer.title),
       description: resolve("description", upstream.description, customer.description),
-      template,
-      tags
+      tags: resolve("tags", upstream.tags, customer.tags),
+      template
     }
-  }
+  }, [fieldChoices, hunkChoices, fieldRows, templateMerge, upstream, customer])
+
+  const [editableFields, setEditableFields] = useState<EditableFields>(mergedFields)
+
+  useEffect(() => {
+    setEditableFields(mergedFields)
+  }, [mergedFields])
 
   const handleApply = async () => {
     setApplying(true)
@@ -110,7 +116,7 @@ export const ReviewUpdateForm = ({ promptId, base, upstream, customer }: Props) 
       const res = await fetch(`/api/prompts/${promptId}/accept-update`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ fields: buildMergedFields() })
+        body: JSON.stringify({ fields: editableFields })
       })
       if (!res.ok) throw new Error()
       router.push(`/prompts/${promptId}`)
@@ -121,7 +127,7 @@ export const ReviewUpdateForm = ({ promptId, base, upstream, customer }: Props) 
   }
 
   return (
-    <div className="space-y-8 max-w-4xl">
+    <div className="space-y-8 max-w-6xl">
       <div className="flex items-center gap-2 text-sm text-gray-500">
         <span>Reviewing</span>
         <span className="rounded-full bg-gray-100 px-2 py-0.5 font-mono text-xs">v{base.version}</span>
@@ -139,6 +145,14 @@ export const ReviewUpdateForm = ({ promptId, base, upstream, customer }: Props) 
         merge={templateMerge}
         hunkChoices={hunkChoices}
         onHunkChoiceChange={(i, side) => setHunkChoices((prev) => ({ ...prev, [i]: side }))}
+      />
+
+      <hr className="border-gray-200" />
+
+      <FinalResultPanel
+        beforeTemplate={customer.template}
+        fields={editableFields}
+        onChange={setEditableFields}
       />
 
       {error && <p className="text-sm text-red-600">{error}</p>}

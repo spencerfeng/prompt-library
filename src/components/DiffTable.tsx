@@ -46,12 +46,12 @@ export const DiffTable = ({ rows, choices, onChoiceChange }: Props) => {
             {rows.map((row) => (
               <tr key={row.key} className={row.status === "unchanged" ? "opacity-40" : ""}>
                 <td className="px-4 py-3 font-medium text-gray-700">{row.label}</td>
-                <td className="px-4 py-3 text-gray-400 max-w-[140px] truncate">{row.base}</td>
-                <td className={`px-4 py-3 max-w-[140px] truncate ${
+                <td className="px-4 py-3 text-gray-400 break-words">{row.base}</td>
+                <td className={`px-4 py-3 break-words ${
                   row.status === "upstream-only" || row.status === "conflict"
                     ? "font-medium text-gray-900" : "text-gray-400"
                 }`}>{row.upstream}</td>
-                <td className={`px-4 py-3 max-w-[140px] truncate ${
+                <td className={`px-4 py-3 break-words ${
                   row.status === "customer-only" || row.status === "conflict"
                     ? "font-medium text-gray-900" : "text-gray-400"
                 }`}>{row.customer}</td>
