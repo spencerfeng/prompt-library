@@ -6,6 +6,6 @@ type Props = {
 
 export const FormattedDate = ({ timestamp }: Props) => (
   <time dateTime={new Date(timestamp).toISOString()} suppressHydrationWarning>
-    {new Date(timestamp).toLocaleDateString()}
+    {new Date(timestamp).toLocaleString()}
   </time>
 )
